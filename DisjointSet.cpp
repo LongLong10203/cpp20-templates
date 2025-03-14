@@ -1,15 +1,15 @@
 template<typename T, typename ... U>
 concept IsAnyOf = (same_as<T, U> || ...);
 
-template <typename T = int, typename Container = vector<T>, typename Hash = hash<T>>
-requires is_integral_v<T> && IsAnyOf<Container, vector<T>, map<T, T>, unordered_map<T, T, Hash>>
+template <integral T = int, typename Container = vector<T>, typename Hash = hash<T>>
+requires IsAnyOf<Container, vector<T>, map<T, T>, unordered_map<T, T, Hash>>
 struct DisjointSet {
     Container lomo, size;
     DisjointSet() = default;
-    DisjointSet(T n) requires same_as<Container, vector<T>> : lomo(n), size(n, 0) {
+    DisjointSet(T n) requires same_as<Container, vector<T>> : lomo(n), size(n, 1) {
         iota(lomo.begin(), lomo.end(), 0);
     }
-    T find(T u) {
+    [[nodiscard]] constexpr T find(T u) {
         if constexpr (!same_as<Container, vector<T>>) {
             if (lomo.find(u) == lomo.end()) {
                 lomo[u] = u;
@@ -18,7 +18,7 @@ struct DisjointSet {
         }
         return lomo[u] == u ? u : lomo[u] = find(lomo[u]);
     }
-    void join(T u, T v) {
+    constexpr void join(T u, T v) {
         T du = find(u), dv = find(v);
         if (du != dv) {
             if (size[du] < size[dv]) {
@@ -28,10 +28,10 @@ struct DisjointSet {
             size[du] += size[dv];
         }
     }
-    bool same(T u, T v) {
+    constexpr bool same(T u, T v) {
         return find(u) == find(v);
     }
-    T get_size(T u) {
+    [[nodiscard]] constexpr T get_size(T u) {
         return size[find(u)];
     }
 };
