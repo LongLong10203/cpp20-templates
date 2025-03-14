@@ -6,10 +6,10 @@ struct CustomHash {
         return x ^ (x >> 31);
     }
     size_t operator()(uint64_t x) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        static const uint64_t FIXED_RANDOM = std::chrono::steady_clock::now().time_since_epoch().count();
         return splitmix64(x + FIXED_RANDOM);
     }
 };
 
 template <typename T, typename U>
-using safe_map = unordered_map<T, U, CustomHash>;
+using safe_map = std::unordered_map<T, U, CustomHash>;

@@ -1,7 +1,7 @@
-template <typename T> struct PrefixSum : public vector<T> {
-    PrefixSum(const int n) : vector<T>(n) {}
-    PrefixSum(const vector<T>& ps) : vector<T>(ps.size()) {
-        partial_sum(ps.begin(), ps.end(), this->begin());
+template <typename T> struct PrefixSum : public std::vector<T> {
+    PrefixSum(const int n) : std::vector<T>(n) {}
+    PrefixSum(const std::vector<T>& ps) : std::vector<T>(ps.size()) {
+        std::partial_sum(ps.begin(), ps.end(), this->begin());
     }
     T query(int l, int r) const {
         assert(l >= 0 && r < this->size() && l <= r);
@@ -12,10 +12,10 @@ template <typename T> struct PrefixSum : public vector<T> {
     }
 };
 
-template <typename T> struct PrefixSum2D : public vector<vector<T>> {
-    PrefixSum2D(const int n, const int m) : vector<vector<T>>(n, vector<T>(m)) {}
-    PrefixSum2D(const vector<vector<T>>& ps)
-        : vector<vector<T>>(ps.size(), vector<T>(ps[0].size())) {
+template <typename T> struct PrefixSum2D : public std::vector<std::vector<T>> {
+    PrefixSum2D(const int n, const int m) : std::vector<std::vector<T>>(n, std::vector<T>(m)) {}
+    PrefixSum2D(const std::vector<std::vector<T>>& ps)
+        : std::vector<std::vector<T>>(ps.size(), std::vector<T>(ps[0].size())) {
         const int n = ps.size(), m = ps[0].size();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
@@ -48,10 +48,10 @@ template <typename T> struct PrefixSum2D : public vector<vector<T>> {
     }
 };
 
-template <typename T> struct DifferenceArray : public vector<T> {
-    DifferenceArray(const int n) : vector<T>(n) {}
-    DifferenceArray(const vector<T>& da) : vector<T>(da.size()) {
-        ranges::copy(da, this->begin());
+template <typename T> struct DifferenceArray : public std::vector<T> {
+    DifferenceArray(const int n) : std::vector<T>(n) {}
+    DifferenceArray(const std::vector<T>& da) : std::vector<T>(da.size()) {
+        std::ranges::copy(da, this->begin());
     }
     void increment(int l, int r, T val) {
         assert(l >= 0 && r < this->size() && l <= r);
@@ -61,14 +61,14 @@ template <typename T> struct DifferenceArray : public vector<T> {
         }
     }
     void build() {
-        partial_sum(this->begin(), this->end(), this->begin());
+        std::partial_sum(this->begin(), this->end(), this->begin());
     }
 };
 
-template <typename T> struct DifferenceArray2D : public vector<vector<T>> {
-    DifferenceArray2D(const int n, const int m) : vector<vector<T>>(n, vector<T>(m)) {}
-    DifferenceArray2D(const vector<vector<T>>& da)
-        : vector<vector<T>>(da.size(), vector<T>(da[0].size())) {
+template <typename T> struct DifferenceArray2D : public std::vector<std::vector<T>> {
+    DifferenceArray2D(const int n, const int m) : std::vector<std::vector<T>>(n, std::vector<T>(m)) {}
+    DifferenceArray2D(const std::vector<std::vector<T>>& da)
+        : std::vector<std::vector<T>>(da.size(), std::vector<T>(da[0].size())) {
         const int n = da.size(), m = da[0].size();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {

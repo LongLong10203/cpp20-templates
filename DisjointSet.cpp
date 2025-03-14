@@ -1,16 +1,16 @@
 template<typename T, typename ... U>
-concept IsAnyOf = (same_as<T, U> || ...);
+concept IsAnyOf = (std::same_as<T, U> || ...);
 
-template <integral T = int, typename Container = vector<T>, typename Hash = hash<T>>
-requires IsAnyOf<Container, vector<T>, map<T, T>, unordered_map<T, T, Hash>>
+template <std::integral T = int, typename Container = std::vector<T>, typename Hash = std::hash<T>>
+requires IsAnyOf<Container, std::vector<T>, std::map<T, T>, std::unordered_map<T, T, Hash>>
 struct DisjointSet {
     Container lomo, size;
     DisjointSet() = default;
-    DisjointSet(T n) requires same_as<Container, vector<T>> : lomo(n), size(n, 1) {
-        iota(lomo.begin(), lomo.end(), 0);
+    DisjointSet(T n) requires std::same_as<Container, std::vector<T>> : lomo(n), size(n, 1) {
+        std::iota(lomo.begin(), lomo.end(), 0);
     }
     [[nodiscard]] constexpr T find(T u) {
-        if constexpr (!same_as<Container, vector<T>>) {
+        if constexpr (!std::same_as<Container, std::vector<T>>) {
             if (lomo.find(u) == lomo.end()) {
                 lomo[u] = u;
                 size[u] = 1;
@@ -22,7 +22,7 @@ struct DisjointSet {
         T du = find(u), dv = find(v);
         if (du != dv) {
             if (size[du] < size[dv]) {
-                swap(du, dv);
+                std::swap(du, dv);
             }
             lomo[dv] = du;
             size[du] += size[dv];

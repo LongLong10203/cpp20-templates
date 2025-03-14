@@ -1,4 +1,4 @@
-template <integral auto N = NULL> struct Sieve : public vector<bool> {
+template <std::integral auto N = NULL> struct Sieve : public std::vector<bool> {
     int n;
     void init(int n) {
         (*this)[0] = (*this)[1] = false;
@@ -10,44 +10,44 @@ template <integral auto N = NULL> struct Sieve : public vector<bool> {
             }
         }
     }
-    Sieve() requires (N != NULL) : vector<bool>(N + 1, true), n(N) {
+    Sieve() requires (N != NULL) : std::vector<bool>(N + 1, true), n(N) {
         init(N);
     }
-    Sieve(int n) requires (N == NULL) : vector<bool>(n + 1, true), n(n) {
+    Sieve(int n) requires (N == NULL) : std::vector<bool>(n + 1, true), n(n) {
         init(n);
     }
-    vector<bool> operator()() { return *this; }
-    auto operator[](int i) -> vector<bool>::reference { return vector<bool>::operator[](i); }
-    bool operator[](int i) const { return vector<bool>::operator[](i); }
+    std::vector<bool> operator()() { return *this; }
+    auto operator[](int i) -> std::vector<bool>::reference { return std::vector<bool>::operator[](i); }
+    bool operator[](int i) const { return std::vector<bool>::operator[](i); }
 };
 
-template <integral auto L = NULL, integral auto R = NULL> requires (L < R)
-struct SegmentedSieve : public vector<bool> {
+template <std::integral auto L = NULL, std::integral auto R = NULL> requires (L < R)
+struct SegmentedSieve : public std::vector<bool> {
     using T = decltype(R);
     T low, high;
     void init(T l, T r) {
         if (l < 2) {
-            for (T i = l; i < min(T(2), r + 1); ++i) {
+            for (T i = l; i < std::min(T(2), r + 1); ++i) {
                 (*this)[i] = false;
             }
         }
-        const T limit = floor(sqrt(r));
+        const T limit = std::floor(std::sqrt(r));
         Sieve sieve(limit);
         for (T p = 2; p <= limit; ++p) {
             if (sieve[p]) {
-                for (T j = max(p * p, ((l + p - 1) / p) * p); j <= r; j += p) {
+                for (T j = std::max(p * p, ((l + p - 1) / p) * p); j <= r; j += p) {
                     (*this)[j] = false;
                 }
             }
         }
     }
-    SegmentedSieve() requires (L != NULL && R != NULL) : vector<bool>(R - L + 1, true), low(L), high(R) {
+    SegmentedSieve() requires (L != NULL && R != NULL) : std::vector<bool>(R - L + 1, true), low(L), high(R) {
         init(L, R);
     }
-    SegmentedSieve(T l, T r) requires (L == NULL && R == NULL) : vector<bool>(r - l + 1, true), low(l), high(r) {
+    SegmentedSieve(T l, T r) requires (L == NULL && R == NULL) : std::vector<bool>(r - l + 1, true), low(l), high(r) {
         init(l, r);
     }
-    vector<bool> operator()() { return *this; }
-    auto operator[](T i) -> vector<bool>::reference { return vector<bool>::operator[](i - low); }
-    bool operator[](T i) const { return vector<bool>::operator[](i - low); }
+    std::vector<bool> operator()() { return *this; }
+    auto operator[](T i) -> std::vector<bool>::reference { return std::vector<bool>::operator[](i - low); }
+    bool operator[](T i) const { return std::vector<bool>::operator[](i - low); }
 };
