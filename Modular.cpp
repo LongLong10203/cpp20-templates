@@ -10,6 +10,8 @@ concept Prime = ([](auto n) constexpr -> bool {
 template <const int MOD> requires Prime<MOD> struct Modular {
     int value;
     Modular() : value(0) {}
+    Modular(const Modular& m) : value(m.value) {}
+    Modular(const string& s) : value(stoll(s) % MOD) { if (value < 0) value += MOD; }
     template <integral T> Modular(T v) : value(int(v % MOD)) { if (value < 0) value += MOD; }
     template <integral T> explicit operator T() const { return value; }
     explicit operator string() const { return to_string(value); }
