@@ -2,7 +2,7 @@
 C++20 templates for competitive programming by Long
 
 ## Tutorials
-[Turorials](./Tutorials)
+[Turorials](./tutorials)
 
 ## Notes
 This is Long's C++20 templates, the old one is abandoned.  
