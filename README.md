@@ -1,7 +1,7 @@
 # cpp20-templates
-C++20 templates for competitive programming by Long
+C++20 templates for competitive programming by Long (Work In Progress)
 
-## Tutorials
+## Tutorials [Important!]
 [Turorials](./tutorials)
 
 ## Notes
