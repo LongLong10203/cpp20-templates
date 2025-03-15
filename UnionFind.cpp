@@ -3,10 +3,10 @@ concept IsAnyOf = (std::same_as<T, U> || ...);
 
 template <std::integral T = int, typename Container = std::vector<T>, typename Hash = std::hash<T>>
 requires IsAnyOf<Container, std::vector<T>, std::map<T, T>, std::unordered_map<T, T, Hash>>
-struct DisjointSet {
+struct UnionFind {
     Container lomo, size;
-    DisjointSet() = default;
-    DisjointSet(T n) requires std::same_as<Container, std::vector<T>> : lomo(n), size(n, 1) {
+    UnionFind() = default;
+    UnionFind(T n) requires std::same_as<Container, std::vector<T>> : lomo(n), size(n, 1) {
         std::iota(lomo.begin(), lomo.end(), 0);
     }
     [[nodiscard]] constexpr T find(T u) {
