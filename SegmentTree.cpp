@@ -15,7 +15,7 @@ private:
             tree[idx] = data[l];
             return;
         }
-        int mid = midpoint(l, r);
+        int mid = std::midpoint(l, r);
         build(2 * idx, l, mid);
         build(2 * idx + 1, mid + 1, r);
         tree[idx] = combine(tree[2 * idx], tree[2 * idx + 1]);
@@ -24,7 +24,7 @@ private:
     [[nodiscard]] T query(int idx, int l, int r, int left, int right) const {
         if (left == l && right == r)
             return tree[idx];
-        int mid = midpoint(l, r);
+        int mid = std::midpoint(l, r);
         if (right <= mid) {
             return query(2 * idx, l, mid, left, right);
         } else if (left > mid) {
@@ -42,7 +42,7 @@ private:
             tree[idx] = val;
             return;
         }
-        int mid = midpoint(l, r);
+        int mid = std::midpoint(l, r);
         if (pos <= mid) {
             update(2 * idx, l, mid, pos, val);
         } else {
