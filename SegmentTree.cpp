@@ -5,10 +5,12 @@ struct SegmentTree {
     std::vector<T> tree, data;
     Combine combine;
 
-    SegmentTree(int n) : n(n), tree(4 * n), data(n, T(0)) {}
-    SegmentTree(const std::vector<T>& data) : n(data.size()), tree(4 * n), data(data) {
+    SegmentTree(int n_, Combine c) : n(n_), tree(4 * n_), data(n_, T{}), combine(std::move(c)) {}
+    SegmentTree(const std::vector<T>& d, Combine c) : n(d.size()), tree(4 * n), data(d), combine(std::move(c)) {
         build(1, 0, n - 1);
     }
+    SegmentTree(int n_) requires std::default_initializable<Combine> : SegmentTree(n_, Combine{}) {}
+    SegmentTree(const std::vector<T>& d) requires std::default_initializable<Combine> : SegmentTree(d, Combine{}) {}
 
 private:
     void build(int idx, int l, int r) {
