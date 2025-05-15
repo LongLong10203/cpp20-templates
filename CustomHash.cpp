@@ -13,3 +13,6 @@ struct CustomHash {
 
 template <typename T, typename U>
 using safe_map = std::unordered_map<T, U, CustomHash>;
+
+template <typename T>
+using safe_set = std::unordered_set<T, CustomHash>;

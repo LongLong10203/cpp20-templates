@@ -1,11 +1,12 @@
-template <typename T, auto combine>
-requires std::is_invocable_v<decltype(combine), T, T>
+template <typename T, typename Combine>
+requires std::is_invocable_v<Combine, T, T>
 struct SegmentTree {
     int n;
-    vector<T> tree, data;
+    std::vector<T> tree, data;
+    Combine combine;
 
     SegmentTree(int n) : n(n), tree(4 * n), data(n, T(0)) {}
-    SegmentTree(const vector<T>& data) : n(data.size()), tree(4 * n), data(data) {
+    SegmentTree(const std::vector<T>& data) : n(data.size()), tree(4 * n), data(data) {
         build(1, 0, n - 1);
     }
 
