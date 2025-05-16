@@ -95,31 +95,23 @@ int main() {
 <summary>Combinations (HKOI)</summary>
 
 ```cpp
-const int MOD = 1e9 + 7;
+const int MOD = 1000000007;
 using mint = Modular<MOD>;
 
-vector<mint> fact, inv_fact;
-const int mxN = 2e5;
+const int mxN = 2e5 + 1;
+vector<mint> fact(mxN);
 
-void precompute(int n) {
-    fact.resize(n + 1);
-    inv_fact.resize(n + 1);
+void precompute() {
     fact[0] = 1;
-    for (int i = 1; i <= n; ++i)
+    for (int i = 1; i < mxN; ++i) {
         fact[i] = fact[i - 1] * i;
-    inv_fact[n] = 1 / fact[n];
-    for (int i = n; i > 0; --i)
-        inv_fact[i - 1] = inv_fact[i] * i;
-}
-
-mint nCr(int n, int k) {
-    return fact[n] * inv_fact[k] * inv_fact[n - k];
+    }
 }
 
 int main() {
     cin.tie(0)->sync_with_stdio(0);
 
-    precompute(mxN);
+    precompute();
 
     int t;
     cin >> t;
@@ -128,11 +120,11 @@ int main() {
         int n, k;
         cin >> n >> k;
 
-        cout << nCr(n, k) << '\n';
+        cout << fact[n] / (fact[k] * fact[n - k]) << '\n';
     }
 }
 ```
 
-[submission](https://judge.hkoi.org/submission/1361167/details)
+[submission](https://judge.hkoi.org/submission/1404274/details)
 
 </details>
