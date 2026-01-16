@@ -6,14 +6,13 @@ struct static_array : public std::array<T, N> {
     }
     constexpr static_array(std::initializer_list<T> il) {
         std::size_t i = 0;
-        for (auto &x : il) {
-            if (i >= N) break;
-            (*this)[i++] = x;
-        }
+        for (auto it = il.begin(); it != il.end() && i < N; ++it, ++i) (*this)[i] = *it;
         for (; i < N; ++i) (*this)[i] = T{};
     }
-    void clear() noexcept {
-        if constexpr (std::is_trivially_copyable_v<T> && std::is_standard_layout_v<T>) {
+    constexpr void clear() noexcept {
+        if constexpr (std::is_trivially_default_constructible_v<T> &&
+                      std::is_trivially_copyable_v<T> &&
+                      std::is_standard_layout_v<T>) {
             std::memset(this->data(), 0, sizeof(*this));
         } else {
             this->fill(T{});
