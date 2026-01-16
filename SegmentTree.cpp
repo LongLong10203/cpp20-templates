@@ -25,7 +25,7 @@ private:
     }
 
     [[nodiscard]] T query(int idx, int l, int r, int left, int right) const {
-        if (left == l && right == r){
+        if (left == l && right == r) {
             return tree[idx];
         }
         int mid = std::midpoint(l, r);
